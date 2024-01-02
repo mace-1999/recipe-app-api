@@ -9,10 +9,12 @@ from django.contrib.auth.models import (
     PermissionsMixin
 )
 
+
 class UserManager(BaseUserManager):
     """
     Manager for users.
     """
+
     def create_user(self, email, password=None, **extra_field):
         """
         Create, save and return a new user.
@@ -34,6 +36,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     """
     User in the system
@@ -48,6 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # define the field that is used for authentication.
     USERNAME_FIELD = 'email'
 
+
 class Recipe(models.Model):
     """Recipe object """
     user = models.ForeignKey(
@@ -60,7 +64,6 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
-
 
     def __str__(self):
         return self.title
