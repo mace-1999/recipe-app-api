@@ -10,7 +10,8 @@ from rest_framework.test import APIClient
 from core.models import Tag
 from recipe.serializers import TagSerializer
 
-TAGS_URL - reverse('recipe:tag-list')
+TAGS_URL = reverse('recipe:tag-list')
+
 
 def create_user(email='user@example.com', password='testpass123'):
     """
@@ -18,10 +19,12 @@ def create_user(email='user@example.com', password='testpass123'):
     """
     return get_user_model().objects.create_user(email=email, password=password)
 
+
 class PublicTagsApiTests(TestCase):
     """
     Test unautheticated API requests.
     """
+
     def setUp(self):
         self.client = APIClient()
 
@@ -32,10 +35,12 @@ class PublicTagsApiTests(TestCase):
         res = self.client.get(TAGS_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateTagsApiTests(TestCase):
     """
     Test authenticated API requests
     """
+
     def setUp(self):
         self.user = create_user()
         self.client = APIClient()
@@ -64,7 +69,6 @@ class PrivateTagsApiTests(TestCase):
         user2 = create_user(email='user2@example.com')
         Tag.objects.create(user=user2, name='Fruity')
         tag = Tag.objects.create(user=self.user, name='Comfort Food')
-
 
         res = self.client.get(TAGS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
