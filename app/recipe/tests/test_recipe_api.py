@@ -183,7 +183,7 @@ class PrivateRecipeAPITests(TestCase):
             'title': 'Thai Prawn Curry',
             'time_minutes': 30,
             'price': Decimal('2.50'),
-            'tags': [{'name': 'Thai' }, {'name': 'Dinner'}]
+            'tags': [{'name': 'Thai'}, {'name': 'Dinner'}]
         }
 
         res = self.client.post(RECIPES_URL, payload, format='json')
@@ -229,7 +229,6 @@ class PrivateRecipeAPITests(TestCase):
             self.assertTrue(exists)
 
     def test_create_tag_on_update(self):
-
         """
         Test creating tag when updating a recipe.
         """
@@ -254,7 +253,7 @@ class PrivateRecipeAPITests(TestCase):
 
         tag_lunch = Tag.objects.create(user=self.user, name='Lunch')
 
-        payload = {'tags' : [{'name': 'Lunch'}]}
+        payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -320,7 +319,6 @@ class PrivateRecipeAPITests(TestCase):
                 user=self.user
             ).exists()
             self.assertTrue(exists)
-
 
     def test_creat_ingredient_on_update(self):
         """Test creating an ingredient when updating a recipe"""

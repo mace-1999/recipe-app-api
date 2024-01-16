@@ -5,13 +5,13 @@ from rest_framework import serializers
 from core.models import Recipe, Tag, Ingredient
 
 
-
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for ingredients"""
     class Meta:
         model = Ingredient
         fields = ['id', 'name']
         read_only_fields = ['id']
+
 
 class TagSerializer(serializers.ModelSerializer):
     """
@@ -32,7 +32,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags', 'ingredients']
+        fields = ['id', 'title', 'time_minutes',
+                  'price', 'link', 'tags', 'ingredients']
         read_only_fields = ['id']
 
     def _get_or_create_tags(self, tags, recipe):
@@ -45,7 +46,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             recipe.tags.add(tag_obj)
 
-    def _get_or_create_ingredients(self, ingredients,recipe):
+    def _get_or_create_ingredients(self, ingredients, recipe):
         """Handle getting or creating ingredients"""
         auth_user = self.context['request'].user
         for ingredient in ingredients:
@@ -54,8 +55,6 @@ class RecipeSerializer(serializers.ModelSerializer):
                 **ingredient,
             )
             recipe.ingredients.add(ingredient_obj)
-
-
 
     def create(self, validated_data):
         """
@@ -93,6 +92,3 @@ class RecipeDetailSerializer(RecipeSerializer):
     """
     class Meta(RecipeSerializer.Meta):
         fields = RecipeSerializer.Meta.fields + ['description']
-
-
-
